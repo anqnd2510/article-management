@@ -1,6 +1,8 @@
 const Article = require("../../../models/article.model");
 
 const paginationHelper = require ("../../../helpers/pagination");
+const searchHelper = require ("../../../helpers/search");
+
 // [GET]/api/v1/articles
 module.exports.index = async (req, res) => {
     const find = {
@@ -11,6 +13,15 @@ module.exports.index = async (req, res) => {
         find.status = req.query.status;
         // mặc địch query sẽ là ?status luôn
     }
+
+    // Search
+    let objectSearch = searchHelper(req.query);
+
+    if (req.query.keyword) {
+        find.title = objectSearch.regex;
+    }
+
+    // End Search
 
     // Sort
     const sort = {};
