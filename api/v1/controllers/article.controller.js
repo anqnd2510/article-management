@@ -147,3 +147,22 @@ module.exports.create = async (req, res) => {
         });
     }
 }
+
+// [PATCH]/api/v1/articles/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        await Article.updateOne({ _id: id }, req.body);
+
+        res.json({
+            code: 200,
+            message: "Sửa bài viết thành công"
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Sửa bài viết thất bại!"
+        });
+    }
+}
