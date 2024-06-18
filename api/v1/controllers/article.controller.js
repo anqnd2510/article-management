@@ -1,10 +1,12 @@
 const Article = require("../../../models/article.model");
 
+const paginationHelper = require ("../../../helpers/pagination");
 // [GET]/api/v1/articles
 module.exports.index = async (req, res) => {
     const find = {
         deleted: false
     };
+
     if(req.query.status) {
         find.status = req.query.status;
         // mặc địch query sẽ là ?status luôn
@@ -19,7 +21,25 @@ module.exports.index = async (req, res) => {
     }
     // End Sort
 
-    const articles = await Article.find(find).sort(sort);
+    // Pagination
+    let initPagination = {
+        currentPage: 1,
+        limitItems: 2,
+    };
+    const countArticles = await Article.countDocuments(find);
+    const objectPagination = paginationHelper(
+        initPagination,
+        req.query,
+        countArticles
+    )
+
+    // End Pagination
+
+    const articles = await Article.find(find)
+    .sort(sort)
+    .limit(objectPagination.limitItems)
+    .skip(objectPagination.skip);
+    ;
     
     res.json(articles);
 };
