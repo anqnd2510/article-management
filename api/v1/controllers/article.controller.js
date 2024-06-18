@@ -128,3 +128,22 @@ module.exports.changeMulti = async (req, res) => {
         });
     }
 };
+
+// [POST]/api/v1/articles/create
+module.exports.create = async (req, res) => {
+    try {
+        const article = new Article(req.body);
+        const data = await article.save();
+
+        res.json({
+            code: 200,
+            message: "Tạo bài viết mới thành công",
+            data: data
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Tạo bài viết mới thất bại"
+        });
+    }
+}
