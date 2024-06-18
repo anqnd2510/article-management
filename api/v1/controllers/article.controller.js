@@ -69,3 +69,28 @@ module.exports.detail = async (req, res) => {
         res.json(" can't find ")
     }
 };
+
+// [PATCH]/api/v1/articles/change-status/:id
+module.exports.changeStatus = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const status = req.body.status;
+
+        await Article.updateOne({
+            _id: id
+        }, {
+            status: status
+        });
+        
+        res.json({
+            code: 200,
+            message: "Thay đổi trạng thái thành công"
+        });
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Thay đổi trạng thái thất bại"
+        });
+    }
+};
+// change status chưa tối ưu lắm đâu, có thể thay status thành bất cứ thứ gì
