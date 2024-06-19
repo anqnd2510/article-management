@@ -3,12 +3,13 @@ const articleSchema = new mongoose.Schema(
     {
     title: String,
     content: String,
-    // categoryId: 
-    // {
-    //     category: String,
-    //     default: ""
-    // }, authorsid, commentsid
-    status: String,
+    category_Id: 
+    {
+        type: String,
+        default: ""
+    }, 
+    // authorsid, commentsid
+    status: { type: String, enum: ["active", "inactive"], default: "active" },
     createdAt: 
     { 
         type: Date, 
