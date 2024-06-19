@@ -67,7 +67,7 @@ module.exports.detail = async (req, res) => {
         
         res.json(article);
     } catch (error) {
-        res.json(" can't find ")
+        res.json(" can't find ");
     }
 };
 
