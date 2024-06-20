@@ -104,7 +104,7 @@ module.exports.changeMulti = async (req, res) => {
         switch (key) {
             case "status":
                 await Article.updateMany({
-                    _id: { $in: ids}
+                    _id: { $in: ids }
                     // lấy ra được id trong ids bằng $in: ids
                 }, {
                     status: value
@@ -116,7 +116,7 @@ module.exports.changeMulti = async (req, res) => {
                 break;
             case "delete":
                 await Article.updateMany({
-                    _id: { $in: ids}
+                    _id: { $in: ids }
                 }, {
                     deleted: true,
                     deletedAt: new Date()
