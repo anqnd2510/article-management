@@ -91,3 +91,65 @@ module.exports.changeMulti = async (req, res) => {
         });
     }
 };
+
+// [POST]/api/v1/categories/create
+module.exports.create = async (req, res) => {
+    try {
+        const category = new Category(req.body);
+        const data = await category.save();
+
+        res.json({
+            code: 200,
+            message: "Tạo thể loại mới thành công",
+            data: data
+        })
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Tạo thể loại mới thất bại"
+        });
+    }
+}
+
+// [PATCH]/api/v1/categories/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+        
+        await Category.updateOne({ _id: id }, req.body);
+
+        res.json({
+            code: 200,
+            message: "Sửa thể loại thành công"
+        })
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Sửa thể loại thất bại"
+        });
+    }
+}
+
+// [DELETE]/api/v1/categories/delete/:id
+module.exports.delete = async (req, res) => {
+    try {
+        const id = req.params.id;
+        
+        await Category.updateOne({ _id: id }, 
+            {
+                deleted: true,
+                deletedAt: new Date()
+            }
+        );
+
+        res.json({
+            code: 200,
+            message: "Xóa thể loại thành công!!!"
+        })
+    } catch (error) {
+        res.json({
+            code: 400,
+            message: "Xóa thể loại thất bại!!!"
+        });
+    }
+}
